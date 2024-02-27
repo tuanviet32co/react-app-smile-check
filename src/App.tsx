@@ -12,10 +12,10 @@ function App() {
 
   return (
     <div className='min-h-screen'>
-      <div className='grid grid-cols-2'>
+      <div className='grid grid-cols-12'>
         <div
           style={{ backgroundImage: `url(${homeJpg})`, backgroundPosition: 'center' }}
-          className='pt-[115%] md:pt-[unset] relative w-full bg-cover bg-blend-luminosity bg-red md:h-[100vh] col-span-2 md:col-span-1'
+          className='pt-[115%] md:pt-[unset] relative w-full bg-cover bg-blend-luminosity bg-red md:h-[100vh] col-span-12 md:col-span-7'
         >
           <div className="absolute top-0 w-full h-full backdrop-brightness-[.65] p-8 text-white">
             <div className='text-[25px] font-semibold'>Change your smile</div>
@@ -37,7 +37,7 @@ function App() {
             </div>
           </div>
         </div>
-        <div className='px-4 py-6 col-span-2 md:col-span-1 md:bg-slate-200'>
+        <div className='px-4 py-6 col-span-12 md:col-span-5 md:bg-slate-200'>
           {isProcessing ?
             <>
               <div className=' text-center mb-2'><i>Processing, please wait a while...</i></div>
