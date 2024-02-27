@@ -11,9 +11,40 @@ import { getAfterImage } from '../services/api';
 
 const { Dragger } = Upload;
 
+const getImageHeight = async (file: any): Promise<number> => {
+  return new Promise((resolve, reject) => {
+    // Create a new FileReader object
+    const reader = new FileReader();
+
+    // Set the onload event handler
+    reader.onload = (event) => {
+      // Create a new Image object
+      const img = new Image();
+
+      // Set the onload event handler for the Image object
+      img.onload = () => {
+        // Resolve the promise with the width and height of the image
+        resolve(img.height);
+      };
+
+      // Set the onerror event handler for the Image object
+      img.onerror = reject;
+
+      // Set the image source to the result of the FileReader's read action
+      img.src = event?.target?.result as any;
+    };
+
+    // Set the onerror event handler for the FileReader object
+    reader.onerror = reject;
+
+    // Read the file as a data URL
+    reader.readAsDataURL(file);
+  });
+}
+
 interface IProps {
   onFinished: (v: [string, string]) => void;
-  toggleProcessing: (v: boolean) => void;
+  toggleProcessing: (v: number) => void;
 }
 
 export const ImageDragger = (props: IProps) => {
@@ -25,14 +56,15 @@ export const ImageDragger = (props: IProps) => {
 
   const uploadImageRequest = async ({ file, onError }: any) => {
     try {
-      toggleProcessing(true);
+      const height = await getImageHeight(file);
+      toggleProcessing(height);
       const data = await Promise.all([
         convertToBase64(file),
         getAfterImage(file),
       ]);
 
       onFinished(data);
-      toggleProcessing(false);
+      toggleProcessing(0);
     } catch (error) {
       onError(error);
     }
@@ -40,14 +72,15 @@ export const ImageDragger = (props: IProps) => {
 
   const customRequestWebcam = async (file: TFile): Promise<void> => {
     if (file) {
-      toggleProcessing(true);
+      const height = await getImageHeight(file);
+      toggleProcessing(height);
       const data = await Promise.all([
         convertToBase64(file),
         getAfterImage(file),
       ]);
 
       onFinished(data);
-      toggleProcessing(false);
+      toggleProcessing(0);
     }
   };
 

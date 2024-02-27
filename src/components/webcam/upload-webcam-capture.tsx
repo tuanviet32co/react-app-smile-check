@@ -100,7 +100,7 @@ export const UploadWebcamCapture = forwardRef<unknown, TUploadProps>(
                 Take another one
               </Button>
               <Button size="large" onClick={save}>
-                Save photo
+                Use this photo
               </Button>
             </div>
           ) : (

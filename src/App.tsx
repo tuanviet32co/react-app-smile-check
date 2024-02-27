@@ -7,7 +7,7 @@ import afterJpg from './assets/after.jpg';
 import homeJpg from './assets/home.jpg';
 
 function App() {
-  const [isProcessing, setIsProcessing] = useState<boolean>(false);
+  const [isProcessing, setIsProcessing] = useState<number>(0);
   const [images, setImages] = useState<[string, string] | undefined>();
 
   return (
@@ -37,12 +37,23 @@ function App() {
             </div>
           </div>
         </div>
-        <div className='mt-3 px-4 py-6'>
+        <div className='mt-1 px-4 py-6'>
           {isProcessing ?
-            <Skeleton.Image active style={{ width: 'calc(100vw - 32px)', height: '200px' }} />
+            <>
+              <div className=' text-center mb-2'><i>Processing, please wait a while...</i></div>
+              <Skeleton.Image active style={{ width: 'calc(100vw - 32px)', height: `${isProcessing}px` }} />
+            </>
             : (images ?
-              <BeforeAfterImages before={images[0]} after={images[1]} />
-              : <BeforeAfterImages before={beforeJpg} after={afterJpg} />)
+              <>
+                <div className=' text-center mb-2'><b>Your after photo, thanks</b></div>
+                <BeforeAfterImages before={images[0]} after={images[1]} />
+              </>
+              :
+              <>
+                <div className=' text-center mb-2'><b>Example:</b></div>
+                <BeforeAfterImages before={beforeJpg} after={afterJpg} />
+              </>
+            )
           }
         </div>
       </div>
