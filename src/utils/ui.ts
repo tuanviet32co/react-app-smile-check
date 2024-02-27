@@ -12,3 +12,12 @@ export const beforeImageUpload = (file: any): boolean => {
 
   return true;
 };
+
+export const convertToBase64 = (file: any): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = (error) => reject(error);
+    reader.readAsDataURL(file);
+  });
+};

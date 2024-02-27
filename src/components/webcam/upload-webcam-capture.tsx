@@ -24,25 +24,20 @@ const dataURLtoFile = (dataurl: string, filename: string): TFile => {
 };
 
 type TUploadProps = {
-  setModalImage?: (s: string) => void; // this props is passed from ImgCrop
   closeWebcamModal: () => void;
   customRequest: (file: TFile) => void;
 };
 
 export const UploadWebcamCapture = forwardRef<unknown, TUploadProps>(
-  ({ setModalImage, closeWebcamModal, customRequest }) => {
+  ({ closeWebcamModal, customRequest }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [imgCapture, setImgCapture] = useState<any>('');
     const webcamRef = useRef<any>(null);
 
     const capture = useCallback(() => {
       const imageSrc = webcamRef.current.getScreenshot();
-      if (setModalImage) {
-        setModalImage(imageSrc);
-      } else {
-        setImgCapture(imageSrc);
-      }
-    }, [webcamRef, setModalImage, setImgCapture]);
+      setImgCapture(imageSrc);
+    }, [webcamRef, setImgCapture]);
 
     const reTake = () => {
       setImgCapture('');

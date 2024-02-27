@@ -14,7 +14,7 @@ export const WebcamModal = NiceModal.create<TProps>(({ customRequest }) => {
   };
 
   return (
-    <Modal open={modal.visible} width={650} onCancel={closeWebcamModal} maskClosable={false} footer={null}>
+    <Modal open={modal.visible} width={650} onCancel={closeWebcamModal} maskClosable={false} footer={null} destroyOnClose>
       <div>
         <div className="mb-4 text-lg font-bold text-darkBlueColor">Take your photo</div>
         <UploadWebcamCapture customRequest={customRequest} closeWebcamModal={closeWebcamModal} />
