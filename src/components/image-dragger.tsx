@@ -1,4 +1,3 @@
-import { ReactNode } from 'react';
 import { Button, notification, Upload } from 'antd';
 
 import { ReactComponent as UploadSVG } from '../assets/Upload.svg';
@@ -11,6 +10,7 @@ import { TFile } from './webcam/upload-webcam-capture';
 import { v4 as uuidv4 } from 'uuid';
 import { CameraRequestModal } from '../utils/CameraRequestModal';
 import { beforeImageUpload } from '../utils/ui';
+import cameraGif from '../assets/camera.gif'; // make sure the path is correct
 
 // import { useGetSignedUrlMutation } from './services/api';
 // import { s3Upload } from 'services/s3-api/endpoints';
@@ -23,11 +23,6 @@ interface IProps extends Omit<DraggerProps, 'onChange'> {
   onChange?: (value: any[]) => void;
   publicUpload?: boolean;
   className?: string;
-  minMandatoryNumber?: number;
-  placeholder?: ReactNode;
-  uploadImageIcon?: ReactNode;
-  croppable?: boolean;
-  uploadListClassName?: string;
   isWebcamEnable?: boolean;
   isPatientSmileQuestionnaire?: boolean;
   onSave?: () => void;
@@ -36,7 +31,6 @@ interface IProps extends Omit<DraggerProps, 'onChange'> {
 export const ImageDragger = (props: IProps) => {
   const {
     name,
-    minMandatoryNumber,
     onSave,
     ...rest
   } = props;
@@ -177,12 +171,12 @@ export const ImageDragger = (props: IProps) => {
             <div className="mr-3 mt-1"><UploadSVG /></div>
             <div className="upload-text">
               <p className="text-left">
-                Click or drag file to this area to upload{' '}
-                {minMandatoryNumber ? `(${value?.length || 0}/${minMandatoryNumber})` : ''}
+                Click or drag file to this area to upload
               </p>
               <div className="self-stretch">
                 <Button onClick={handleTakePhotoClick} className="h-full rounded">
-                  <CameraOutlined style={{ fontSize: '20px' }} />
+                  {/* <CameraOutlined style={{ fontSize: '20px' }} /> */}
+                  <img src={cameraGif} style={{ fontSize: '20px' }} />
                   <div className="-mt-1 text-xs">Take a photo</div>
                 </Button>
               </div>
