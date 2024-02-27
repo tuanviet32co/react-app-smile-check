@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { BeforeAfterImages } from './components/before-after-images';
 import { ImageDragger } from './components/image-dragger';
-import { Form, Skeleton } from 'antd';
+import { Skeleton } from 'antd';
 import beforeJpg from './assets/before.jpg';
 import afterJpg from './assets/after.jpg';
 import homeJpg from './assets/home.jpg';
@@ -11,9 +11,7 @@ function App() {
   const [images, setImages] = useState<[string, string] | undefined>();
 
   return (
-    <div className='min-h-screen'
-
-    >
+    <div className='min-h-screen'>
       <div className=''>
         <div
           style={{ backgroundImage: `url(${homeJpg})` }}
@@ -41,7 +39,7 @@ function App() {
         </div>
         <div className='mt-3 px-4 py-6'>
           {isProcessing ?
-            <Skeleton.Image active />
+            <Skeleton.Image active style={{ width: 'calc(100vw - 32px)', height: '200px' }} />
             : (images ?
               <BeforeAfterImages before={images[0]} after={images[1]} />
               : <BeforeAfterImages before={beforeJpg} after={afterJpg} />)
