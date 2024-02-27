@@ -14,8 +14,8 @@ function App() {
     <div className='min-h-screen'>
       <div className=''>
         <div
-          style={{ backgroundImage: `url(${homeJpg})` }}
-          className='pt-[115%] relative w-full bg-cover bg-blend-luminosity bg-red'
+          style={{ backgroundImage: `url(${homeJpg})`, backgroundPosition: 'center' }}
+          className='pt-[115%] md:pt-[unset] relative w-full bg-cover bg-blend-luminosity bg-red h-[60vh]'
         >
           <div className="absolute top-0 w-full h-full backdrop-brightness-[.65] p-8 text-white">
             <div className='text-[25px] font-semibold'>Change your smile</div>
