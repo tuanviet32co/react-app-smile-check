@@ -13,22 +13,26 @@ const { Dragger } = Upload;
 
 interface IProps {
   onFinished: (v: [string, string]) => void;
+  toggleProcessing: (v: boolean) => void;
 }
 
 export const ImageDragger = (props: IProps) => {
   // const { isLg, isMd } = useWindowSize();
   const {
     onFinished,
+    toggleProcessing,
   } = props;
 
   const uploadImageRequest = async ({ file, onError }: any) => {
     try {
+      toggleProcessing(true);
       const data = await Promise.all([
         convertToBase64(file),
         getAfterImage(file),
       ]);
 
       onFinished(data);
+      toggleProcessing(false);
     } catch (error) {
       onError(error);
     }
@@ -36,12 +40,14 @@ export const ImageDragger = (props: IProps) => {
 
   const customRequestWebcam = async (file: TFile): Promise<void> => {
     if (file) {
+      toggleProcessing(true);
       const data = await Promise.all([
         convertToBase64(file),
         getAfterImage(file),
       ]);
 
       onFinished(data);
+      toggleProcessing(false);
     }
   };
 
@@ -79,18 +85,20 @@ export const ImageDragger = (props: IProps) => {
         maxCount={1}
         showUploadList={false}
       >
-        <div className="flex w-full items-center justify-center">
-          <div className="mr-3 mt-1"><UploadSVG /></div>
-          <div className="upload-text">
-            <p className="text-left text-white">
-              Click or drag file to this area to upload
-            </p>
-          </div>
-        </div>
-        <div className="self-stretch">
-          <Button onClick={handleTakePhotoClick} className="h-full rounded">
-            <img src={cameraGif} height="20px" width="20px" alt='' />
-            <div className="-mt-1 text-base text-white">Take a photo</div>
+        <div className='absolute'>
+          <Button className="flex w-full items-center justify-center bg-white space-x-2 px-2 h-[40px]">
+            <div className="text-lg">
+              Upload your file
+            </div>
+            <div><UploadSVG height={22} width={22} /></div>
+          </Button>
+          <li className='absolute text-lg text-white font-semibold left-[79%] top-[45px]'>OR</li>
+          <Button
+            onClick={handleTakePhotoClick}
+            className="h-full rounded flex items-center bg-white text-black space-x-2 m-x-0 pl-2 pr-3 left-[74%] top-[40px]"
+          >
+            <div className="text-lg">Take a photo</div>
+            <img src={cameraGif} height="30px" width="30px" alt='' />
           </Button>
         </div>
       </Dragger>

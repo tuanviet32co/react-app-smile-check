@@ -32,7 +32,7 @@ export const BeforeAfterImages: FC<TProps> = ({ before, after }) => {
     fireTransition();
   }, []);
   return (
-    <div className="w-full md:w-1/2 !h-[240px] rounded-lg border-2 border-red-400 ">
+    <div className="w-full md:w-1/2 h-full rounded-lg border-2 border-red-400 ">
       <ReactCompareSlider
         transition="0.25s cubic-bezier(.17,.67,.83,.67)"
         ref={reactCompareSliderRef}

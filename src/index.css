@@ -16,3 +16,11 @@ code {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.ant-upload-wrapper .ant-upload-drag {
+  border: none;
+}
+
+.ant-upload-wrapper .ant-upload-drag span {
+  padding: 0 !important;
+}
