@@ -10,8 +10,9 @@ function App() {
   // const [after, setAfter] = useState<string>('');
 
   return (
-    <div className=" min-h-screen">
-      <div className="px-4 py-6">
+    <div className=' min-h-screen'>
+      <div className='px-4 py-6'>
+        <div>Change the appearance of your smile with 32Co AI</div>
         <Form.Item>
           <ImageDragger name="" />
         </Form.Item>

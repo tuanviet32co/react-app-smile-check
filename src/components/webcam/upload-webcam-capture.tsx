@@ -104,12 +104,12 @@ export const UploadWebcamCapture = forwardRef<unknown, TUploadProps>(
               <Button size="large" onClick={reTake}>
                 Take another one
               </Button>
-              <Button type="primary" size="large" onClick={save}>
+              <Button size="large" onClick={save}>
                 Save photo
               </Button>
             </div>
           ) : (
-            <Button type="primary" size="large" onClick={capture} disabled={isLoading}>
+            <Button size="large" onClick={capture} disabled={isLoading}>
               Capture photo
             </Button>
           )}

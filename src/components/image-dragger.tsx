@@ -11,9 +11,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { CameraRequestModal } from '../utils/CameraRequestModal';
 import { beforeImageUpload } from '../utils/ui';
 import cameraGif from '../assets/camera.gif'; // make sure the path is correct
-
+// import axios
 // import { useGetSignedUrlMutation } from './services/api';
 // import { s3Upload } from 'services/s3-api/endpoints';
+import axios from 'axios';
 
 const { Dragger } = Upload;
 
@@ -110,8 +111,22 @@ export const ImageDragger = (props: IProps) => {
         folderName: rest.id!,
       };
 
-      // const signedUrl = await getPublicSignedUrl(filePayload).unwrap();
-      // await s3Upload(signedUrl.url, file, (percent: number) => onProgress({ percent }, file));
+
+      const formData = new FormData();
+      formData.append('image', file);
+      axios.post('http://localhost:3001/upload', formData, {
+        headers: {
+          // Axios automatically sets the Content-Type to multipart/form-data, so this is optional
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
       const signedUrl: any = {};
       const url = signedUrl && signedUrl.url.split('?')[0];
 
