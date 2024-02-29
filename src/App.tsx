@@ -54,48 +54,34 @@ function App() {
 
   return (
     <div
-      style={{ backgroundImage: `url(${isMd ? bg1Jpg : bg2Jpg})`, backgroundPosition: 'top' }}
-      className='min-h-screen relative w-full bg-cover md:h-[100vh] col-span-12 md:col-span-7'
+      className='min-h-screen relative w-full h-[100vh]'
     >
-      <SakuraCanvas />
+      <div className='absolute z-[100]'>
+        <div className='col-span-12 md:col-span-6 text-2xl'>
+          Find suitable Smile Simulation with your Intra oral
+        </div>
+        <div className='col-span-12 md:col-span-6'>
 
-      <div className="absolute top-0 w-full h-full p-8 text-white">
-        <div className='grid grid-cols-12'>
-          <div className='col-span-12 md:col-span-6 text-2xl'>
-            Find suitable Smile Simulation with your Intra oral
-          </div>
-          <div className='col-span-12 md:col-span-6'>
-
-            {result ?
-              <div>
-                <ResultComponent result={result} />
-                <Button onClick={handleReset}>Start Over</Button>
-              </div>
-              :
-              <div className='bg-white bg-opacity-80 p-12 rounded-3xl'>
-                <ImageDragger
-                  onFinished={setResult}
-                  toggleProcessing={setIsProcessing}
-                />
-              </div>
-            }
-          </div>
-
-          {/* <div className='col-span-12 md:col-span-6'>
+          {!result ?
             <div className='bg-white bg-opacity-80 p-12 rounded-3xl'>
               <ImageDragger
-                onFinished={handleFinished}
+                onFinished={setResult}
                 toggleProcessing={setIsProcessing}
               />
             </div>
-          </div> */}
-
-        </div>
-        <div className="flex flex-col text-white justify-center items-center space-y-2 absolute bottom-6 left-1/2 -translate-x-1/2">
-          <div className="text-base font-semibold">Powered by</div>
-          <Logo />
+            :
+            <div>
+              <ResultComponent result={result} />
+              <Button onClick={handleReset}>Start Over</Button>
+            </div>
+          }
         </div>
       </div>
+      <div className="flex flex-col text-white justify-center items-center space-y-2 absolute bottom-6 left-1/2 -translate-x-1/2">
+        <div className="text-base font-semibold">Powered by</div>
+        <Logo />
+      </div>
+      <SakuraCanvas />
     </div>
   );
 }
