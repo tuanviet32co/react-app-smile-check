@@ -1,60 +1,46 @@
-import { useState } from 'react';
-import { BeforeAfterImages } from './components/before-after-images';
+import { useEffect, useState } from 'react';
+// import { BeforeAfterImages } from './components/before-after-images';
 import { ImageDragger } from './components/image-dragger';
-import { Skeleton } from 'antd';
-import beforeJpg from './assets/before.jpg';
-import afterJpg from './assets/after.jpg';
-import homeJpg from './assets/home.jpg';
+import bg1Jpg from './assets/bg1.jpg';
+import bg2Jpg from './assets/bg2.jpg';
+import NiceModal from '@ebay/nice-modal-react';
+import { ResultModal } from './components/result-modal';
+import { useWindowSize } from './utils/useWindowSize';
+import { ReactComponent as Logo } from './assets/32co-logo.svg';
+
+const RESULT = {
+  toothAnimationUrl: `https://webview.32-stories.com/?mlink=https://onyx-uploads.s3.eu-west-2.amazonaws.com/Client983/SUBM-WWNXGKF/81F16ABD470C45A5879866538E9A9157.iiwgl&fg=004&bg=ddd&p=BUERRB`,
+  info: ''
+}
 
 function App() {
-  const [isProcessing, setIsProcessing] = useState<number>(0);
-  const [images, setImages] = useState<[string, string] | undefined>();
+  const { isMd } = useWindowSize()
+  const [isProcessing, setIsProcessing] = useState<boolean>(true);
+
+  const handleFinished = (v: any) => {
+    NiceModal.show(ResultModal, { result: RESULT });
+  }
 
   return (
-    <div className='min-h-screen'>
-      <div className='grid grid-cols-12'>
-        <div
-          style={{ backgroundImage: `url(${homeJpg})`, backgroundPosition: 'center' }}
-          className='pt-[115%] md:pt-[unset] relative w-full bg-cover bg-blend-luminosity bg-red md:h-[100vh] col-span-12 md:col-span-7'
-        >
-          <div className="absolute top-0 w-full h-full backdrop-brightness-[.65] p-8 text-white">
-            <div className='text-[25px] font-semibold'>Change your smile</div>
-            <div className='text-[35px] font-semibold mb-6'><i className='text-[22px]'>with</i> <span>32Co AI</span></div>
-            <ul>
-              {['Full-face looking straight ahead',
-                'Well-lit environment',
-                'Big smile!'].map((item => (
-                  <li className='flex space-x-2 text-base leading-8' key={item}>
-                    <img src="https://assets-global.website-files.com/625533ffa3e085aa3328ea34/63cb7e1b440ed74125d789c9_check.svg" loading="lazy" alt="" />
-                    <div>{item}</div></li>
-                )))}
-            </ul>
-            <div className='bg-primary-400 text-light text-sm inline-block py-1 w-40 mt-6'>
-              <ImageDragger
-                onFinished={(v) => setImages(v)}
-                toggleProcessing={setIsProcessing}
-              />
-            </div>
+    <div
+      style={{ backgroundImage: `url(${isMd ? bg1Jpg : bg2Jpg})`, backgroundPosition: 'top' }}
+      className='min-h-screen relative w-full bg-cover bg-blend-luminosity bg-red md:h-[100vh] col-span-12 md:col-span-7'
+    >
+      <div className="absolute top-0 w-full h-full backdrop-brightness-[.50] p-8 text-white">
+        <div className='grid grid-cols-12'>
+          <div className='col-span-12 md:col-span-6 text-2xl'>
+            Find suitable Smile Simulation with your Intra oral
+          </div>
+          <div className='col-span-12 md:col-span-6'>
+            <ImageDragger
+              onFinished={handleFinished}
+              toggleProcessing={setIsProcessing}
+            />
           </div>
         </div>
-        <div className='px-4 py-6 col-span-12 md:col-span-5 md:bg-slate-200'>
-          {isProcessing ?
-            <>
-              <div className=' text-center mb-2'><i>Processing, please wait a while...</i></div>
-              <Skeleton.Image active style={{ width: 'calc(100vw - 32px)', height: `${isProcessing}px` }} />
-            </>
-            : (images ?
-              <>
-                <div className=' text-center mb-2'><b>Your after photo, thanks</b></div>
-                <BeforeAfterImages before={images[0]} after={images[1]} />
-              </>
-              :
-              <>
-                <div className=' text-center mb-2'><b>Example:</b></div>
-                <BeforeAfterImages before={beforeJpg} after={afterJpg} />
-              </>
-            )
-          }
+        <div className="flex flex-col text-white justify-center items-center space-y-2 absolute bottom-6 left-1/2 -translate-x-1/2">
+          <div className="text-base font-semibold">Powered by</div>
+          <Logo />
         </div>
       </div>
     </div>

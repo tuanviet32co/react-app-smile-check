@@ -17,10 +17,10 @@ code {
 @tailwind components;
 @tailwind utilities;
 
-.ant-upload-wrapper .ant-upload-drag {
-  border: none;
+.ant-skeleton.ant-skeleton-element {
+  width: 100%;
 }
 
-.ant-upload-wrapper .ant-upload-drag span {
-  padding: 0 !important;
+.anticon.anticon-dot-chart {
+  font-size: 80px;
 }
