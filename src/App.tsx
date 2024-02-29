@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { ImageDragger } from './components/image-dragger';
 import { ResultComponent } from './components/result-modal';
 // import { useWindowSize } from './utils/useWindowSize';
-// import { ReactComponent as Logo } from './assets/32co-logo.svg';
+import { ReactComponent as Logo } from './assets/32co-logo.svg';
 import { Button, Spin } from 'antd';
 import { PageLayout } from './components/animate/page-layout';
 
 function App() {
   // const { isMd } = useWindowSize();
-  const [isProcessing, setIsProcessing] = useState<boolean>(true);
+  const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
   const [result, setResult] = useState<any>();
 
@@ -32,12 +32,18 @@ function App() {
             {!result ? 'Find suitable Smile Simulation with your Intra oral' : 'Smile Simulation for you'}
           </div>
           {!result ?
-            <Spin tip="Loading..." spinning={isProcessing}>
-              <ImageDragger
-                onFinished={setResult}
-                toggleProcessing={setIsProcessing}
-              />
-            </Spin>
+            <>
+              <Spin tip="Loading..." spinning={isProcessing}>
+                <ImageDragger
+                  onFinished={setResult}
+                  toggleProcessing={setIsProcessing}
+                />
+              </Spin>
+              <div className="flex text-white justify-center items-center mt-6">
+                <Logo width={36}/>
+                <div className='ml-3 text-black mt-2'>Built with ❤️ at 32Co</div>
+              </div>
+            </>
             :
             <ResultComponent result={result} />
           }
@@ -48,10 +54,7 @@ function App() {
             <Button className='w-40 bg-[#1677ff]' onClick={handleReset} size='large' type='primary'>Start Over</Button>
           </div>
         }
-        {/* <div className="flex flex-col text-white justify-center items-center space-y-2">
-          <div className="text-base font-semibold">Powered by</div>
-          <Logo />
-        </div> */}
+
       </div>
     </PageLayout>
   );

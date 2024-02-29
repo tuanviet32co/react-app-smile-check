@@ -7,7 +7,6 @@ import { TFile } from './webcam/upload-webcam-capture';
 import { CameraRequestModal } from '../utils/CameraRequestModal';
 import { beforeImageUpload, convertToBase64 } from '../utils/ui';
 import { getSimulationData } from '../services/api';
-import { CameraOutlined } from '@ant-design/icons';
 
 const { Dragger } = Upload;
 
@@ -26,10 +25,10 @@ export const ImageDragger = (props: IProps) => {
   const uploadImageRequest = async ({ file, onError }: any) => {
     try {
       toggleProcessing(true);
-      const before = await convertToBase64(file);
+      const beforeImage = await convertToBase64(file);
       const data = await getSimulationData(file);
 
-      onFinished({ ...data, before });
+      onFinished({ ...data, beforeImage });
       toggleProcessing(false);
     } catch (error) {
       onError(error);
@@ -39,10 +38,10 @@ export const ImageDragger = (props: IProps) => {
   const customRequestWebcam = async (file: TFile): Promise<void> => {
     if (file) {
       toggleProcessing(true);
-      const before = await convertToBase64(file);
+      const beforeImage = await convertToBase64(file);
       const data = await getSimulationData(file);
 
-      onFinished({ ...data, before });
+      onFinished({ ...data, beforeImage });
       toggleProcessing(false);
     }
   };
@@ -84,10 +83,10 @@ export const ImageDragger = (props: IProps) => {
         <div className="flex w-full items-center justify-center">
           <div className="mr-3 mt-1"><img src={uploadPng} alt='' /></div>
           <div className="upload-text">
-              Click or drag file to this area to upload{' '}
-              <Button type='link' onClick={handleTakePhotoClick} className="font-semibold text-lg text-violet-700 rounded">
-                <span className='underline'>Take a photo</span>
-              </Button>
+            Click or drag Intra oral to this area to upload{' '}
+            <Button type='link' onClick={handleTakePhotoClick} className="font-semibold text-lg text-violet-700 rounded">
+              <span className='underline'>Take a photo</span>
+            </Button>
           </div>
         </div>
       </Dragger>

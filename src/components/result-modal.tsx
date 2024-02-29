@@ -38,20 +38,32 @@ type TProps = {
 };
 
 export const ResultComponent: FC<TProps> = ({ result }) => {
-  const { treatmentDesign, toothAnimationUrl } = result;
+  const { treatmentDesign, toothAnimationUrl, beforeImage } = result;
   const isArchStageDiff =
     treatmentDesign?.arches === archesInTreatmentType.archDual &&
     treatmentDesign?.upperStageNumber !== treatmentDesign?.lowerStageNumber;
 
   return (
     <div>
-      <NiceCollapse title="Treatment Design">
+      <div className='font-semibold mt-4 mb-2'>Simulation:</div>
+      <SmilePreviewComponent url={toothAnimationUrl} />
+      <div className='flex mt-7 space-x-4'>
+        <div>
+          <div className='mb-3'>Your uploaded photo</div>
+          <img src={beforeImage} alt="" className='h-[200px]' />
+        </div>
+        <div>
+          <div className='mb-3'>Matched photo</div>
+          <img src={treatmentDesign?.images[0]} className='h-[200px] ' alt="" />
+        </div>
+      </div>
+      <NiceCollapse title="Treatment Design" open className='mt-7'>
         <div className="border-0 border-t border-solid border-gray-100 py-4 px-2 ">
           <div className="grid grid-cols-12">
-            <div className="col-span-12 md:col-span-6">
+            <div className="col-span-12 md:col-span-6 lg:col-span-4">
               <ViewItem title="Arches in treatment">{treatmentDesign?.arches}</ViewItem>
             </div>
-            <div className="col-span-12 md:col-span-6">
+            <div className="col-span-12 md:col-span-6 lg:col-span-4">
               <ViewItem title="Total steps">{treatmentDesign?.totalSteps}</ViewItem>
             </div>
             <div className="col-span-12">
@@ -80,10 +92,10 @@ export const ResultComponent: FC<TProps> = ({ result }) => {
                 {treatmentDesign?.lowerStageNumber}
               </ViewItem>
             </div>
-            <div className="col-span-12 md:col-span-6">
+            <div className="col-span-12 md:col-span-6 lg:col-span-4">
               <ViewItem title="IPR">{treatmentDesign?.havingIpr}</ViewItem>
             </div>
-            <div className="col-span-12 md:col-span-6">
+            <div className="col-span-12 md:col-span-6 lg:col-span-4">
               <ViewItem title="IPR stages">
                 <div className="flex flex-wrap">
                   {treatmentDesign?.iprStages?.map((text: any) => (
@@ -92,10 +104,10 @@ export const ResultComponent: FC<TProps> = ({ result }) => {
                 </div>
               </ViewItem>
             </div>
-            <div className="col-span-12 md:col-span-6">
+            <div className="col-span-12 md:col-span-6 lg:col-span-4">
               <ViewItem title="Attachments">{treatmentDesign?.havingAttachment}</ViewItem>
             </div>
-            <div className="col-span-12 md:col-span-6">
+            <div className="col-span-12 md:col-span-6 lg:col-span-4">
               <ViewItem title="Attachments stages">
                 <div className="flex flex-wrap">
                   {treatmentDesign?.attachmentStages?.map((text: any) => (
@@ -119,8 +131,6 @@ export const ResultComponent: FC<TProps> = ({ result }) => {
           </div>
         </div>
       </NiceCollapse>
-      <div className='font-semibold mt-4 mb-2'>Simulation:</div>
-      <SmilePreviewComponent url={toothAnimationUrl} />
     </div>
   );
 };

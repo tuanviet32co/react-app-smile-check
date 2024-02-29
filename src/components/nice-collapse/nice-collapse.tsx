@@ -50,7 +50,7 @@ export const NiceCollapse: FC<INiceCollapseProps> = ({
   return (
     <div className={classNames('nice-collapse-wrapper', className, hasError ? 'error' : '')}>
       <Collapse expandIconPosition="start" activeKey={activeKey} expandIcon={expandIcon} onChange={onActiveKeyChange}>
-        <Panel header={title} key="1" extra={extra} forceRender>
+        <Panel header={<b>{title}</b>} key="1" extra={extra} forceRender>
           {showDivider && <Divider className="m-0 mb-3" />}
           {children}
         </Panel>

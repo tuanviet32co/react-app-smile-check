@@ -20,13 +20,10 @@ export const RESULT = {
     "elastics": [],
     "auxiliaryDetail": "Et accusantium volup",
     "comment": "A mollitia et qui do",
-  },
-  images: [
-    'https://32co-files-upload-staging.s3.eu-west-2.amazonaws.com/intraOralImages/91fb4d88-c583-41c1-a56b-cf8cfb085f41-intraoral-help-2.8c05a871c04922a5b391.jpg',
-    'https://32co-files-upload-staging.s3.eu-west-2.amazonaws.com/intraOralImages/09d29367-7e86-40dd-aa75-50fb3cad4fd8-intraoral-help-3.bda9f1d5bd706916df9c.jpg',
-    'https://32co-files-upload-development.s3.eu-west-2.amazonaws.com/completed-treatment/a00ca901-e9dd-4695-a19d-ba119faaeaad-intraoral-help-1.0ce7e638edfc2b4c0c65.jpg-cropped.jpeg',
-    'https://32co-files-upload-staging.s3.eu-west-2.amazonaws.com/intraOralImages/4a006a78-4668-4a07-a289-edbfd54586f6-intraoral-help-5.c1d7dd44e863fa2e7a97.jpg'
-  ]
+    "images": [
+      'https://32co-files-upload-staging.s3.eu-west-2.amazonaws.com/intraOralImages/91fb4d88-c583-41c1-a56b-cf8cfb085f41-intraoral-help-2.8c05a871c04922a5b391.jpg'
+    ]
+  }
 }
 
 const simulateApiCall = (data: any) => {

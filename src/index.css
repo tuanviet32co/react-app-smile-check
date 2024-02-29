@@ -108,3 +108,8 @@ code {
 .waveAnimation .waveBottom {
   animation: move_wave 15s linear infinite;
 }
+
+.ant-collapse-header {
+  background: white;
+  border-radius: 8px 8px 0px 0px !important;
+}
