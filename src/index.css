@@ -17,13 +17,13 @@ code {
 @tailwind components;
 @tailwind utilities;
 
-.ant-skeleton.ant-skeleton-element {
+/* .ant-skeleton.ant-skeleton-element {
   width: 100%;
 }
 
 .anticon.anticon-dot-chart {
   font-size: 80px;
-}
+} */
 
 @keyframes move_wave {
   0% {

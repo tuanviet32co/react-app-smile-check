@@ -1,6 +1,6 @@
 import { Button, Upload } from 'antd';
 
-import { ReactComponent as UploadSVG } from '../assets/Upload.svg';
+import uploadPng from '../assets/upload.png';
 import NiceModal from '@ebay/nice-modal-react';
 import { WebcamModal } from './webcam/webcam-modal';
 import { TFile } from './webcam/upload-webcam-capture';
@@ -27,7 +27,7 @@ export const ImageDragger = (props: IProps) => {
     try {
       toggleProcessing(true);
       const before = await convertToBase64(file);
-      const data = await getSimulationData(file, true);
+      const data = await getSimulationData(file);
 
       onFinished({ ...data, before });
       toggleProcessing(false);
@@ -40,7 +40,7 @@ export const ImageDragger = (props: IProps) => {
     if (file) {
       toggleProcessing(true);
       const before = await convertToBase64(file);
-      const data = await getSimulationData(file, true);
+      const data = await getSimulationData(file);
 
       onFinished({ ...data, before });
       toggleProcessing(false);
@@ -73,7 +73,7 @@ export const ImageDragger = (props: IProps) => {
   };
 
   return (
-    <div className="w-full max-w-xs gap-x-2">
+    <div className="w-full gap-x-2 bg-white rounded-lg">
       <Dragger
         multiple
         customRequest={uploadImageRequest}
@@ -81,18 +81,13 @@ export const ImageDragger = (props: IProps) => {
         maxCount={1}
         showUploadList={false}
       >
-        <div className="flex w-full items-center justify-center text-white">
-          <div className="mr-3 mt-1"><UploadSVG /></div>
+        <div className="flex w-full items-center justify-center">
+          <div className="mr-3 mt-1"><img src={uploadPng} alt='' /></div>
           <div className="upload-text">
-            <p className="text-left">
               Click or drag file to this area to upload{' '}
-            </p>
-            <div className="self-stretch">
-              <Button onClick={handleTakePhotoClick} className="h-full rounded">
-                <CameraOutlined style={{ fontSize: '20px' }} />
-                <div className="-mt-1 text-xs text-white">Take a photo</div>
+              <Button type='link' onClick={handleTakePhotoClick} className="font-semibold text-lg text-violet-700 rounded">
+                <span className='underline'>Take a photo</span>
               </Button>
-            </div>
           </div>
         </div>
       </Dragger>
