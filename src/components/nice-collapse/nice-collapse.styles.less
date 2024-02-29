@@ -1,0 +1,55 @@
+.nice-collapse-wrapper {
+  background-color: white;
+  padding: 15px 5px;
+  border-radius: 5px;
+
+  .ant-collapse {
+    border: none;
+    background-color: inherit;
+  }
+
+  .ant-collapse-header {
+    border: none !important;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 0px 15px !important;
+  }
+
+  &.error {
+    .ant-collapse-header {
+      .ant-collapse-header-text {
+        color: #e53535 !important;
+
+        .ant-typography {
+          color: #e53535 !important;
+        }
+      }
+    }
+  }
+
+  .ant-collapse-content {
+    border: none;
+    background-color: inherit;
+  }
+
+  .ant-collapse > .ant-collapse-item {
+    border: none;
+  }
+
+  .p-panel-content {
+    border: none !important;
+  }
+
+  .collapse-btn {
+    z-index: 11;
+
+    .anticon.anticon-down {
+      margin-left: 0px;
+      line-height: 0;
+    }
+  }
+
+  .ant-collapse-content > .ant-collapse-content-box {
+    padding: 16px 16px 0px 16px;
+  }
+}

@@ -6,41 +6,10 @@ import { WebcamModal } from './webcam/webcam-modal';
 import { TFile } from './webcam/upload-webcam-capture';
 import { CameraRequestModal } from '../utils/CameraRequestModal';
 import { beforeImageUpload, convertToBase64 } from '../utils/ui';
-import { getAfterImage } from '../services/api';
+import { getSimulationData } from '../services/api';
 import { CameraOutlined } from '@ant-design/icons';
 
 const { Dragger } = Upload;
-
-const getImageHeight = async (file: any): Promise<number> => {
-  return new Promise((resolve, reject) => {
-    // Create a new FileReader object
-    const reader = new FileReader();
-
-    // Set the onload event handler
-    reader.onload = (event) => {
-      // Create a new Image object
-      const img = new Image();
-
-      // Set the onload event handler for the Image object
-      img.onload = () => {
-        // Resolve the promise with the width and height of the image
-        resolve(img.height);
-      };
-
-      // Set the onerror event handler for the Image object
-      img.onerror = reject;
-
-      // Set the image source to the result of the FileReader's read action
-      img.src = event?.target?.result as any;
-    };
-
-    // Set the onerror event handler for the FileReader object
-    reader.onerror = reject;
-
-    // Read the file as a data URL
-    reader.readAsDataURL(file);
-  });
-}
 
 interface IProps {
   onFinished: (v: [string, string]) => void;
@@ -59,7 +28,7 @@ export const ImageDragger = (props: IProps) => {
       toggleProcessing(true);
       const data = await Promise.all([
         convertToBase64(file),
-        getAfterImage(file),
+        getSimulationData(file),
       ]);
 
       onFinished(data);
@@ -74,7 +43,7 @@ export const ImageDragger = (props: IProps) => {
       toggleProcessing(true);
       const data = await Promise.all([
         convertToBase64(file),
-        getAfterImage(file),
+        getSimulationData(file),
       ]);
 
       onFinished(data);
