@@ -26,12 +26,10 @@ export const ImageDragger = (props: IProps) => {
   const uploadImageRequest = async ({ file, onError }: any) => {
     try {
       toggleProcessing(true);
-      const data = await Promise.all([
-        convertToBase64(file),
-        getSimulationData(file),
-      ]);
+      const before = await convertToBase64(file);
+      const data = await getSimulationData(file, true);
 
-      onFinished(data);
+      onFinished({ ...data, before });
       toggleProcessing(false);
     } catch (error) {
       onError(error);
@@ -41,12 +39,10 @@ export const ImageDragger = (props: IProps) => {
   const customRequestWebcam = async (file: TFile): Promise<void> => {
     if (file) {
       toggleProcessing(true);
-      const data = await Promise.all([
-        convertToBase64(file),
-        getSimulationData(file),
-      ]);
+      const before = await convertToBase64(file);
+      const data = await getSimulationData(file, true);
 
-      onFinished(data);
+      onFinished({ ...data, before });
       toggleProcessing(false);
     }
   };

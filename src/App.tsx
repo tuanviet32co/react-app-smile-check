@@ -1,15 +1,12 @@
 import { useState } from 'react';
-// import { BeforeAfterImages } from './components/before-after-images';
 import { ImageDragger } from './components/image-dragger';
-import bg1Jpg from './assets/bg1.jpg';
-import bg2Jpg from './assets/bg2.jpg';
 import { ResultComponent } from './components/result-modal';
 import { useWindowSize } from './utils/useWindowSize';
 import { ReactComponent as Logo } from './assets/32co-logo.svg';
-import { SakuraCanvas } from './components/animate/sakura-canvas';
 import { Button } from 'antd';
+import { PageLayout } from './components/animate/page-layout';
 
-const RESULT = {
+export const RESULT = {
   toothAnimationUrl: `https://webview.32-stories.com/?mlink=https://onyx-uploads.s3.eu-west-2.amazonaws.com/Client983/SUBM-WWNXGKF/81F16ABD470C45A5879866538E9A9157.iiwgl&fg=004&bg=ddd&p=BUERRB`,
   treatmentDesign: {
     "upperStageNumber": 1,
@@ -43,46 +40,46 @@ function App() {
 
   const [result, setResult] = useState<any>(RESULT);
 
-  // const handleFinished = (v: any) => {
-  //   NiceModal.show(ResultModal, { result: RESULT });
-  // }
-
   const handleReset = () => {
     setIsProcessing(false);
     setResult(undefined);
   }
 
   return (
-    <div
-      className='min-h-screen relative w-full h-[100vh]'
-    >
-      <div className='absolute z-[100]'>
-        <div className='col-span-12 md:col-span-6 text-2xl'>
-          Find suitable Smile Simulation with your Intra oral
-        </div>
-        <div className='col-span-12 md:col-span-6'>
-
+    <PageLayout>
+      <div className='flex flex-col items-center justify-center min-h-screen pt-4 md:pt-8 pb-10'>
+        <div
+          className='bg-white bg-opacity-80 p-3 md:p-6 rounded-lg md:rounded-3xl min-h-[350px] max-w-[95%]'
+          style={{
+            width: result ? '1000px' : '500px',
+            transition: 'width 0.5s ease, height 0.5s ease',
+            boxShadow: `rgba(100, 100, 111, 0.2) 0px 7px 29px 0px`,
+          }}
+        >
+          <div className='text-xl text-slate-700 text-center font-semibold mb-4 mt-3'>
+            {!result ? 'Find suitable Smile Simulation with your Intra oral' : 'Smile Simulation for you'}
+          </div>
           {!result ?
-            <div className='bg-white bg-opacity-80 p-12 rounded-3xl'>
-              <ImageDragger
-                onFinished={setResult}
-                toggleProcessing={setIsProcessing}
-              />
-            </div>
+            <ImageDragger
+              onFinished={setResult}
+              toggleProcessing={setIsProcessing}
+            />
             :
-            <div>
-              <ResultComponent result={result} />
-              <Button onClick={handleReset}>Start Over</Button>
-            </div>
+            <ResultComponent result={result} />
           }
         </div>
+
+        {result &&
+          <div className='mt-3'>
+            <Button className='w-40 bg-[#1677ff]' onClick={handleReset} size='large' type='primary'>Start Over</Button>
+          </div>
+        }
+        {/* <div className="flex flex-col text-white justify-center items-center space-y-2">
+          <div className="text-base font-semibold">Powered by</div>
+          <Logo />
+        </div> */}
       </div>
-      <div className="flex flex-col text-white justify-center items-center space-y-2 absolute bottom-6 left-1/2 -translate-x-1/2">
-        <div className="text-base font-semibold">Powered by</div>
-        <Logo />
-      </div>
-      <SakuraCanvas />
-    </div>
+    </PageLayout>
   );
 }
 

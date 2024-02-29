@@ -45,88 +45,82 @@ export const ResultComponent: FC<TProps> = ({ result }) => {
 
   return (
     <div>
-      <div className="mb-4 text-lg font-bold text-darkBlueColor">Your result</div>
-      <div className=''>
-
-        <NiceCollapse title="Treatment Design">
-          <div className="border-0 border-t border-solid border-gray-100 py-4 px-2 ">
-            <div className="grid grid-cols-12">
-              <div className="col-span-12 md:col-span-6">
-                <ViewItem title="Arches in treatment">{treatmentDesign?.arches}</ViewItem>
-              </div>
-              <div className="col-span-12 md:col-span-6">
-                <ViewItem title="Total steps">{treatmentDesign?.totalSteps}</ViewItem>
-              </div>
-              <div className="col-span-12">
-                <ViewItem
-                  title={
-                    <div className="flex items-center gap-1">
-                      No. of Upper Aligners{' '}
-                      {treatmentDesign?.arches === archesInTreatmentType.archLower && <SingleArchPopover />}
-                      {isArchStageDiff && <ArchDiffFlag />}
-                    </div>
-                  }
-                >
-                  {treatmentDesign?.upperStageNumber}{' '}
-                </ViewItem>
-              </div>
-              <div className="col-span-12">
-                <ViewItem
-                  title={
-                    <div className="flex items-center gap-1">
-                      No. of Lower Aligners{' '}
-                      {treatmentDesign?.arches === archesInTreatmentType.archUpper && <SingleArchPopover />}
-                      {isArchStageDiff && <ArchDiffFlag />}
-                    </div>
-                  }
-                >
-                  {treatmentDesign?.lowerStageNumber}
-                </ViewItem>
-              </div>
-              <div className="col-span-12 md:col-span-6">
-                <ViewItem title="IPR">{treatmentDesign?.havingIpr}</ViewItem>
-              </div>
-              <div className="col-span-12 md:col-span-6">
-                <ViewItem title="IPR stages">
-                  <div className="flex flex-wrap">
-                    {treatmentDesign?.iprStages?.map((text: any) => (
-                      <Chip key={text} text={text} />
-                    ))}
+      <NiceCollapse title="Treatment Design">
+        <div className="border-0 border-t border-solid border-gray-100 py-4 px-2 ">
+          <div className="grid grid-cols-12">
+            <div className="col-span-12 md:col-span-6">
+              <ViewItem title="Arches in treatment">{treatmentDesign?.arches}</ViewItem>
+            </div>
+            <div className="col-span-12 md:col-span-6">
+              <ViewItem title="Total steps">{treatmentDesign?.totalSteps}</ViewItem>
+            </div>
+            <div className="col-span-12">
+              <ViewItem
+                title={
+                  <div className="flex items-center gap-1">
+                    No. of Upper Aligners{' '}
+                    {treatmentDesign?.arches === archesInTreatmentType.archLower && <SingleArchPopover />}
+                    {isArchStageDiff && <ArchDiffFlag />}
                   </div>
-                </ViewItem>
-              </div>
-              <div className="col-span-12 md:col-span-6">
-                <ViewItem title="Attachments">{treatmentDesign?.havingAttachment}</ViewItem>
-              </div>
-              <div className="col-span-12 md:col-span-6">
-                <ViewItem title="Attachments stages">
-                  <div className="flex flex-wrap">
-                    {treatmentDesign?.attachmentStages?.map((text: any) => (
-                      <Chip key={text} text={text} />
-                    ))}
+                }
+              >
+                {treatmentDesign?.upperStageNumber}{' '}
+              </ViewItem>
+            </div>
+            <div className="col-span-12">
+              <ViewItem
+                title={
+                  <div className="flex items-center gap-1">
+                    No. of Lower Aligners{' '}
+                    {treatmentDesign?.arches === archesInTreatmentType.archUpper && <SingleArchPopover />}
+                    {isArchStageDiff && <ArchDiffFlag />}
                   </div>
-                </ViewItem>
-              </div>
-              <div className="col-span-6 mt-2">
-                <ViewItem title="Auxiliaries">{treatmentDesign?.havingElastic}</ViewItem>
-              </div>
-              <div className="col-span-12">
-                <ViewItem title="Auxiliaries type">{treatmentDesign?.elastics?.join(', ')}</ViewItem>
-              </div>
-              <div className="col-span-12 mt-2">
-                <ViewItem title="Auxiliaries details">{treatmentDesign?.auxiliaryDetail}</ViewItem>
-              </div>
-              <div className="col-span-12 mt-2">
-                <ViewItem title="Comments">{treatmentDesign?.comment}</ViewItem>
-              </div>
+                }
+              >
+                {treatmentDesign?.lowerStageNumber}
+              </ViewItem>
+            </div>
+            <div className="col-span-12 md:col-span-6">
+              <ViewItem title="IPR">{treatmentDesign?.havingIpr}</ViewItem>
+            </div>
+            <div className="col-span-12 md:col-span-6">
+              <ViewItem title="IPR stages">
+                <div className="flex flex-wrap">
+                  {treatmentDesign?.iprStages?.map((text: any) => (
+                    <Chip key={text} text={text} />
+                  ))}
+                </div>
+              </ViewItem>
+            </div>
+            <div className="col-span-12 md:col-span-6">
+              <ViewItem title="Attachments">{treatmentDesign?.havingAttachment}</ViewItem>
+            </div>
+            <div className="col-span-12 md:col-span-6">
+              <ViewItem title="Attachments stages">
+                <div className="flex flex-wrap">
+                  {treatmentDesign?.attachmentStages?.map((text: any) => (
+                    <Chip key={text} text={text} />
+                  ))}
+                </div>
+              </ViewItem>
+            </div>
+            <div className="col-span-6 mt-2">
+              <ViewItem title="Auxiliaries">{treatmentDesign?.havingElastic}</ViewItem>
+            </div>
+            <div className="col-span-12">
+              <ViewItem title="Auxiliaries type">{treatmentDesign?.elastics?.join(', ')}</ViewItem>
+            </div>
+            <div className="col-span-12 mt-2">
+              <ViewItem title="Auxiliaries details">{treatmentDesign?.auxiliaryDetail}</ViewItem>
+            </div>
+            <div className="col-span-12 mt-2">
+              <ViewItem title="Comments">{treatmentDesign?.comment}</ViewItem>
             </div>
           </div>
-        </NiceCollapse>
-
-
-        <div className='font-semibold mb-2'>Simulation:</div>
-        <SmilePreviewComponent url={toothAnimationUrl} />
-      </div>
+        </div>
+      </NiceCollapse>
+      <div className='font-semibold mt-4 mb-2'>Simulation:</div>
+      <SmilePreviewComponent url={toothAnimationUrl} />
     </div>
   );
 };
