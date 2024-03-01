@@ -5,13 +5,18 @@ import { WebcamModal } from './webcam/webcam-modal';
 import { TFile } from './webcam/upload-webcam-capture';
 import { CameraRequestModal } from './modal/camera-request-modal';
 import { beforeImageUpload, convertToBase64 } from '../utils/ui';
-import { getSimulationData } from '../services/api';
-import { isEmpty } from 'lodash';
+import { TResult, getSimulationData } from '../services/api';
+import { AdditionalQuestionModal } from './modal/additional-question-modal';
 
 const { Dragger } = Upload;
 
+
+export type TResult2 = TResult & {
+  beforeImage: string;
+};
+
 interface IProps {
-  onFinished: (v: [string, string]) => void;
+  onFinished: (v: TResult2) => void;
   toggleProcessing: (v: boolean) => void;
 }
 
@@ -25,14 +30,21 @@ export const ImageDragger = (props: IProps) => {
     try {
       toggleProcessing(true);
       const beforeImage = await convertToBase64(file);
-      const data = await getSimulationData(file);
 
-      if (isEmpty(data)) {
+      const additionalQuestion: any = await NiceModal.show(AdditionalQuestionModal);
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('arches', additionalQuestion.arches);
+
+      const resData = await getSimulationData(formData, true);
+
+      if (!resData) {
         notification.error({ message: `Sorry, the service is not working, please try again!` });
         toggleProcessing(false);
         return;
       }
-      onFinished({ ...data, beforeImage });
+
+      onFinished({ ...resData, beforeImage });
       toggleProcessing(false);
     } catch (error) {
       console.error(error);
@@ -43,9 +55,21 @@ export const ImageDragger = (props: IProps) => {
     try {
       toggleProcessing(true);
       const beforeImage = await convertToBase64(file);
-      const data = await getSimulationData(file);
 
-      onFinished({ ...data, beforeImage });
+      const additionalQuestion: any = await NiceModal.show(AdditionalQuestionModal);
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('arches', additionalQuestion.arches);
+
+      const resData = await getSimulationData(formData, true);
+
+      if (!resData) {
+        notification.error({ message: `Sorry, the service is not working, please try again!` });
+        toggleProcessing(false);
+        return;
+      }
+
+      onFinished({ ...resData, beforeImage });
       toggleProcessing(false);
     } catch (error) {
       console.error(error);

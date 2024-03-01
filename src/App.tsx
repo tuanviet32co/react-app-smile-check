@@ -31,14 +31,14 @@ function App() {
           </div>
           {!result ?
             <>
-              <Spin tip="Loading..." spinning={isProcessing}>
+              <Spin tip="Processing, please wait a while..." spinning={isProcessing}>
                 <ImageDragger
                   onFinished={setResult}
                   toggleProcessing={setIsProcessing}
                 />
               </Spin>
               <div className="flex text-white justify-center items-center mt-6">
-                <Logo width={36}/>
+                <Logo width={36} />
                 <div className='ml-3 text-black mt-2'>Built with ❤️ at 32Co</div>
               </div>
             </>
@@ -49,7 +49,7 @@ function App() {
 
         {result &&
           <div className='mt-3'>
-            <Button className='w-60 bg-[#1677ff]' onClick={handleReset} size='large' type='primary'>Start Over</Button>
+            <Button className='w-60 bg-[#1677ff] font-semibold h-[50px]' onClick={handleReset} size='large' type='primary'>Start Over</Button>
           </div>
         }
 

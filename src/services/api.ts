@@ -1,32 +1,31 @@
 import axios from 'axios';
-import { convertToBase64 } from '../utils/ui';
 
-export const RESULT = {
-  toothAnimationUrl: `https://webview.32-stories.com/?mlink=https://onyx-uploads.s3.eu-west-2.amazonaws.com/Client983/SUBM-WWNXGKF/81F16ABD470C45A5879866538E9A9157.iiwgl&fg=004&bg=ddd&p=BUERRB`,
+export type TResult = {
+  toothAnimationUrl: string;
   treatmentDesign: {
-    "upperStageNumber": 1,
-    "lowerStageNumber": 1,
-    "totalSteps": 1,
-    "arches": "Single arch - upper",
-    "havingIpr": true,
-    "iprStages": [
-      "Stage 0"
-    ],
-    "havingAttachment": true,
-    "havingElastic": false,
-    "attachmentStages": [
-      "Stage 1"
-    ],
-    "elastics": [],
-    "auxiliaryDetail": "Et accusantium volup",
-    "comment": "A mollitia et qui do",
-    "images": [
-      'https://32co-files-upload-staging.s3.eu-west-2.amazonaws.com/intraOralImages/91fb4d88-c583-41c1-a56b-cf8cfb085f41-intraoral-help-2.8c05a871c04922a5b391.jpg'
-    ]
+    totalSteps: 25
+    arches: string;
+    estimatedPrice: 2000
+    totalRefinements: 3
+    accuracy: 95
+    image: string;
   }
 }
 
-const simulateApiCall = (data: any) => {
+export const RESULT: TResult = {
+  toothAnimationUrl: `https://webview.32-stories.com/?mlink=https://onyx-uploads.s3.eu-west-2.amazonaws.com/Client983/SUBM-WWNXGKF/81F16ABD470C45A5879866538E9A9157.iiwgl&fg=004&bg=ddd&p=BUERRB`,
+  treatmentDesign: {
+    "totalSteps": 25,
+    "arches": "Single Arch - Upper",
+    "estimatedPrice": 2000,
+    "totalRefinements": 3,
+    "accuracy": 95,
+    "image": 'https://32co-files-upload-staging.s3.eu-west-2.amazonaws.com/intraOralImages/91fb4d88-c583-41c1-a56b-cf8cfb085f41-intraoral-help-2.8c05a871c04922a5b391.jpg',
+  }
+}
+
+
+const simulateApiCall = (data: TResult): Promise<TResult> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(data);
@@ -35,14 +34,12 @@ const simulateApiCall = (data: any) => {
 }
 
 
-export const getSimulationData = async (beforeFile: any, mock?: boolean): Promise<any> => {
+export const getSimulationData = async (formData: any, mock?: boolean): Promise<TResult | null> => {
   if (mock) {
     return await simulateApiCall(RESULT);
   }
 
   try {
-    const formData = new FormData();
-    formData.append('file', beforeFile);
     const res = await axios.post('http://localhost:3005/image', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
@@ -51,23 +48,6 @@ export const getSimulationData = async (beforeFile: any, mock?: boolean): Promis
     return res.data;
   } catch (error) {
     console.error(error);
-    return {};
-  }
-}
-
-
-export const getSimulationData2 = async (beforeFile: any): Promise<any> => {
-  try {
-    const beforeBase64 = await convertToBase64(beforeFile);
-    const res = await axios.post('http://localhost:3001/upload', { image: beforeBase64 }, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    });
-
-    return res.data;
-  } catch (error) {
-    console.error(error);
-    return {};
+    return null;
   }
 }

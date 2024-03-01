@@ -1,136 +1,80 @@
-import { Popover, Typography } from 'antd';
 import { SmilePreviewComponent } from './smile-preview/smile-preview';
-import { NiceCollapse } from './nice-collapse/nice-collapse';
-import { ViewItem } from './view-item/view-item';
-import { Chip } from './chip/chip';
-import { FlagTwoTone, InfoCircleOutlined } from '@ant-design/icons';
 import { FC } from 'react';
+import { TResult2 } from './image-dragger';
+import { useWindowSize } from '../utils/useWindowSize';
+import { Tag } from 'antd';
 
-export const archesInTreatmentType = {
-  archDual: 'Dual Arch - upper / lower',
-  archUpper: 'Single arch - upper',
-  archLower: 'Single arch - lower',
-};
-
-const ArchDiffFlag = () => (
-  <div>
-    <FlagTwoTone twoToneColor="#4133c5" />
-    <Typography.Text className="ml-1 !text-sm font-normal text-midBlueColor">
-      Arch stages differ - Double-check numbers
-    </Typography.Text>
-  </div>
-);
-
-const SingleArchPopover = () => (
-  <Popover
-    content="Please note: if your case is a single arch treatment case you will still receive 1 retainer for the opposing arch"
-    title="Single Arch Cases"
-    trigger="click"
-    overlayClassName="w-80"
-  >
-    <InfoCircleOutlined className="vertical-align-middle ml-1" style={{ fontSize: 18 }} />
-  </Popover>
-);
-
+const getLengthOfTreatment = (stages: number) => {
+  if (stages <= 8) return `${stages} Weeks`;
+  const months = Math.floor(stages / 4);
+  return `${months} - ${months + 1} Months`;
+}
 
 type TProps = {
-  result: any;
+  result: TResult2;
 };
 
 export const ResultComponent: FC<TProps> = ({ result }) => {
+  const { isMd } = useWindowSize();
   const { treatmentDesign, toothAnimationUrl, beforeImage } = result;
-  const isArchStageDiff =
-    treatmentDesign?.arches === archesInTreatmentType.archDual &&
-    treatmentDesign?.upperStageNumber !== treatmentDesign?.lowerStageNumber;
 
   return (
     <div>
-      <div className='font-semibold mt-4 mb-2'>Simulation:</div>
-      <SmilePreviewComponent url={toothAnimationUrl} />
-      <div className='flex mt-7 space-x-12'>
-        <div>
-          <div className='mb-3 font-semibold'>Your uploaded photo</div>
-          <img src={beforeImage} alt="" className='h-[300px]' />
-        </div>
-        <div>
-          <div className='mb-3 font-semibold'>Matched photo</div>
-          <img src={treatmentDesign?.images[0]} className='h-[300px] ' alt="" />
-        </div>
-      </div>
-      <NiceCollapse title="Treatment Design" open className='mt-7'>
-        <div className="border-0 border-t border-solid border-gray-100 py-4 px-2 ">
-          <div className="grid grid-cols-12">
-            <div className="col-span-12 md:col-span-6 lg:col-span-4">
-              <ViewItem title="Arches in treatment">{treatmentDesign?.arches}</ViewItem>
-            </div>
-            <div className="col-span-12 md:col-span-6 lg:col-span-4">
-              <ViewItem title="Total steps">{treatmentDesign?.totalSteps}</ViewItem>
-            </div>
-            <div className="col-span-12 md:col-span-6 lg:col-span-4">
-              <ViewItem
-                title={
-                  <div className="flex items-center gap-1">
-                    No. of Upper Aligners{' '}
-                    {treatmentDesign?.arches === archesInTreatmentType.archLower && <SingleArchPopover />}
-                    {isArchStageDiff && <ArchDiffFlag />}
-                  </div>
-                }
+      <div className="mt-8 grid w-full grid-flow-row content-center gap-4 md:gap-8 md:grid-flow-col md:grid-cols-12 md:grid-rows-6 ">
+        <div className="col-span-6 row-span-5 flex h-full flex-col items-center gap-2 rounded-xl p-6 md:pb-3 shadow-custom2 md:mt-4 bg-slate-50">
+          <div className="text-center text-sm text-darkGrey xl:text-xl">
+            Estimated Price <span className="whitespace-nowrap font-bold">( +/- £100 )</span>
+          </div>
+          <div className="mt-2 text-4xl font-bold text-greenColor">£{Number(treatmentDesign.estimatedPrice).toLocaleString()}</div>
+          <div className="mt-2 flex flex-wrap items-center justify-center gap-1">
+            {[
+              `${treatmentDesign.arches} arch`,
+              `${treatmentDesign.totalRefinements} Refinements`,
+            ].map((value) => (
+              <Tag
+                key={value}
+                className="!rounded-xl border-none bg-lightBlue3 font-semibold capitalize text-darkBlueColor"
               >
-                {treatmentDesign?.upperStageNumber}{' '}
-              </ViewItem>
-            </div>
-            <div className="col-span-12 md:col-span-6 lg:col-span-4">
-              <ViewItem
-                title={
-                  <div className="flex items-center gap-1">
-                    No. of Lower Aligners{' '}
-                    {treatmentDesign?.arches === archesInTreatmentType.archUpper && <SingleArchPopover />}
-                    {isArchStageDiff && <ArchDiffFlag />}
-                  </div>
-                }
-              >
-                {treatmentDesign?.lowerStageNumber}
-              </ViewItem>
-            </div>
-            <div className="col-span-12 md:col-span-6 lg:col-span-4">
-              <ViewItem title="IPR">{treatmentDesign?.havingIpr}</ViewItem>
-            </div>
-            <div className="col-span-12 md:col-span-6 lg:col-span-4">
-              <ViewItem title="IPR stages">
-                <div className="flex flex-wrap">
-                  {treatmentDesign?.iprStages?.map((text: any) => (
-                    <Chip key={text} text={text} />
-                  ))}
-                </div>
-              </ViewItem>
-            </div>
-            <div className="col-span-12 md:col-span-6 lg:col-span-4">
-              <ViewItem title="Attachments">{treatmentDesign?.havingAttachment}</ViewItem>
-            </div>
-            <div className="col-span-12 md:col-span-6 lg:col-span-4">
-              <ViewItem title="Attachments stages">
-                <div className="flex flex-wrap">
-                  {treatmentDesign?.attachmentStages?.map((text: any) => (
-                    <Chip key={text} text={text} />
-                  ))}
-                </div>
-              </ViewItem>
-            </div>
-            <div className="col-span-12 md:col-span-6 lg:col-span-4 mt-2">
-              <ViewItem title="Auxiliaries">{treatmentDesign?.havingElastic}</ViewItem>
-            </div>
-            <div className="col-span-12 md:col-span-6 lg:col-span-4">
-              <ViewItem title="Auxiliaries type">{treatmentDesign?.elastics?.join(', ')}</ViewItem>
-            </div>
-            <div className="col-span-12 md:col-span-6 lg:col-span-4 mt-2">
-              <ViewItem title="Auxiliaries details">{treatmentDesign?.auxiliaryDetail}</ViewItem>
-            </div>
-            <div className="col-span-12 md:col-span-6 lg:col-span-4 mt-2">
-              <ViewItem title="Comments">{treatmentDesign?.comment}</ViewItem>
-            </div>
+                <div className='px-2 py-1'>{value}</div>
+              </Tag>
+            ))}
           </div>
         </div>
-      </NiceCollapse>
+
+        <div className="col-span-6 row-span-5 flex h-full flex-col items-center gap-2 rounded-xl p-6 md:pb-3 shadow-custom2 md:mt-4 bg-slate-50">
+          <div className="text-center text-sm text-darkGrey xl:text-xl">Length of Treatment</div>
+          <div className="mt-2 text-center text-2xl font-bold text-darkBlueColor">{getLengthOfTreatment(treatmentDesign.totalSteps)}</div>
+          <Tag className="m-0 mt-4 !rounded-xl border-none bg-lightBlue3 font-semibold text-darkBlueColor">
+            <div className='px-2 py-1'>{treatmentDesign.totalSteps} Aligner Stages</div>
+          </Tag>
+        </div>
+      </div>
+
+      <div className='font-semibold mt-4 mb-2'>Simulation:</div>
+      <SmilePreviewComponent url={toothAnimationUrl} />
+      {isMd ? (
+        <div className=' mt-7 flex space-x-12'>
+          <div>
+            <div className='mb-2 font-semibold'>Your uploaded photo</div>
+            <img src={beforeImage} alt="" className='h-[300px]' />
+          </div>
+          <div>
+            <div className='mb-2 font-semibold'>Matched photo ({treatmentDesign.accuracy}% accuracy)</div>
+            <img src={treatmentDesign?.image} className='h-[300px]' alt="" />
+          </div>
+        </div>
+      ) : (
+        <div className='mt-7'>
+          <div className='w-full'>
+            <div className='mb-2 font-semibold'>Your uploaded photo</div>
+            <img src={beforeImage} alt="" className='w-full' />
+          </div>
+          <div className='w-full mt-3'>
+            <div className='mb-2 font-semibold'>Matched photo <span className='text-greenColor'>({treatmentDesign.accuracy}% accuracy)</span></div>
+            <img src={treatmentDesign?.image} className='w-full' alt="" />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
