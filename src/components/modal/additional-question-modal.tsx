@@ -12,8 +12,6 @@ const ARCH_OPTIONS = [
   'Single arch - lower'
 ];
 
-
-
 const getInitialTreatmentType = () => {
   const storageValue = localStorage.getItem('treatmentType');
   return ARCH_OPTIONS.includes(storageValue as string) ? storageValue : ARCH_OPTIONS[0];

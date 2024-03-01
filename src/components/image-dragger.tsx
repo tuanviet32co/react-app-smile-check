@@ -2,14 +2,14 @@ import { Button, Upload, notification } from 'antd';
 import uploadPng from '../assets/upload.png';
 import NiceModal from '@ebay/nice-modal-react';
 import { WebcamModal } from './webcam/webcam-modal';
-import { TFile } from './webcam/upload-webcam-capture';
 import { CameraRequestModal } from './modal/camera-request-modal';
 import { beforeImageUpload, convertToBase64 } from '../utils/ui';
 import { TResult, getSimulationData } from '../services/api';
 import { AdditionalQuestionModal } from './modal/additional-question-modal';
 
-const { Dragger } = Upload;
+const isMoreData = false;
 
+const { Dragger } = Upload;
 
 export type TResult2 = TResult & {
   beforeImage: string;
@@ -26,17 +26,20 @@ export const ImageDragger = (props: IProps) => {
     toggleProcessing,
   } = props;
 
-  const uploadImageRequest = async ({ file }: any) => {
+  const uploadImage = async (file: any) => {
     try {
       toggleProcessing(true);
       const beforeImage = await convertToBase64(file);
 
-      const additionalQuestion: any = await NiceModal.show(AdditionalQuestionModal);
       const formData = new FormData();
       formData.append('file', file);
-      formData.append('arches', additionalQuestion.arches);
 
-      const resData = await getSimulationData(formData, true);
+      if (isMoreData) {
+        const additionalQuestion: any = await NiceModal.show(AdditionalQuestionModal);
+        formData.append('arches', additionalQuestion.arches);
+      }
+
+      const resData = await getSimulationData(formData);
 
       if (!resData) {
         notification.error({ message: `Sorry, the service is not working, please try again!` });
@@ -51,30 +54,9 @@ export const ImageDragger = (props: IProps) => {
     }
   };
 
-  const customRequestWebcam = async (file: TFile): Promise<void> => {
-    try {
-      toggleProcessing(true);
-      const beforeImage = await convertToBase64(file);
+  const uploadImageRequest = async ({ file }: any) => uploadImage(file);
 
-      const additionalQuestion: any = await NiceModal.show(AdditionalQuestionModal);
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('arches', additionalQuestion.arches);
-
-      const resData = await getSimulationData(formData, true);
-
-      if (!resData) {
-        notification.error({ message: `Sorry, the service is not working, please try again!` });
-        toggleProcessing(false);
-        return;
-      }
-
-      onFinished({ ...resData, beforeImage });
-      toggleProcessing(false);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const customRequestWebcam = uploadImage;
 
   const checkCameraPermission = async (): Promise<boolean> => {
     try {
