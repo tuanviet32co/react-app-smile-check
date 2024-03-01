@@ -59,7 +59,7 @@ export const ResultComponent: FC<TProps> = ({ result }) => {
             <img src={beforeImage} alt="" className='h-[300px]' />
           </div>
           <div>
-            <div className='mb-2 font-semibold'>Matched photo ({treatmentDesign.accuracy}% accuracy)</div>
+            <div className='mb-2 font-semibold'>Matched photo <span className='text-greenColor'>({treatmentDesign.accuracy}% accuracy)</span></div>
             <img src={treatmentDesign?.image} className='h-[300px]' alt="" />
           </div>
         </div>
