@@ -1,6 +1,6 @@
-import waveTopPng from '../../assets/wave-top.png';
-import waveMidPng from '../../assets/wave-mid.png';
-import waveBotPng from '../../assets/wave-bot.png';
+import waveTopPng from '../assets/wave-top.png';
+import waveMidPng from '../assets/wave-mid.png';
+import waveBotPng from '../assets/wave-bot.png';
 import { FC } from 'react';
 
 export const PageLayout: FC<{ children: React.ReactNode }> = ({ children }) => {

@@ -1,13 +1,11 @@
 import { useState } from 'react';
 import { ImageDragger } from './components/image-dragger';
 import { ResultComponent } from './components/result-modal';
-// import { useWindowSize } from './utils/useWindowSize';
+import { PageLayout } from './components/page-layout';
 import { ReactComponent as Logo } from './assets/32co-logo.svg';
 import { Button, Spin } from 'antd';
-import { PageLayout } from './components/animate/page-layout';
 
 function App() {
-  // const { isMd } = useWindowSize();
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
   const [result, setResult] = useState<any>();
@@ -51,7 +49,7 @@ function App() {
 
         {result &&
           <div className='mt-3'>
-            <Button className='w-40 bg-[#1677ff]' onClick={handleReset} size='large' type='primary'>Start Over</Button>
+            <Button className='w-60 bg-[#1677ff]' onClick={handleReset} size='large' type='primary'>Start Over</Button>
           </div>
         }
 

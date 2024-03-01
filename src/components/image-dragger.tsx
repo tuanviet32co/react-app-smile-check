@@ -1,12 +1,12 @@
-import { Button, Upload } from 'antd';
-
+import { Button, Upload, notification } from 'antd';
 import uploadPng from '../assets/upload.png';
 import NiceModal from '@ebay/nice-modal-react';
 import { WebcamModal } from './webcam/webcam-modal';
 import { TFile } from './webcam/upload-webcam-capture';
-import { CameraRequestModal } from '../utils/CameraRequestModal';
+import { CameraRequestModal } from './modal/camera-request-modal';
 import { beforeImageUpload, convertToBase64 } from '../utils/ui';
 import { getSimulationData } from '../services/api';
+import { isEmpty } from 'lodash';
 
 const { Dragger } = Upload;
 
@@ -16,13 +16,30 @@ interface IProps {
 }
 
 export const ImageDragger = (props: IProps) => {
-  // const { isLg, isMd } = useWindowSize();
   const {
     onFinished,
     toggleProcessing,
   } = props;
 
-  const uploadImageRequest = async ({ file, onError }: any) => {
+  const uploadImageRequest = async ({ file }: any) => {
+    try {
+      toggleProcessing(true);
+      const beforeImage = await convertToBase64(file);
+      const data = await getSimulationData(file);
+
+      if (isEmpty(data)) {
+        notification.error({ message: `Sorry, the service is not working, please try again!` });
+        toggleProcessing(false);
+        return;
+      }
+      onFinished({ ...data, beforeImage });
+      toggleProcessing(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const customRequestWebcam = async (file: TFile): Promise<void> => {
     try {
       toggleProcessing(true);
       const beforeImage = await convertToBase64(file);
@@ -31,18 +48,7 @@ export const ImageDragger = (props: IProps) => {
       onFinished({ ...data, beforeImage });
       toggleProcessing(false);
     } catch (error) {
-      onError(error);
-    }
-  };
-
-  const customRequestWebcam = async (file: TFile): Promise<void> => {
-    if (file) {
-      toggleProcessing(true);
-      const beforeImage = await convertToBase64(file);
-      const data = await getSimulationData(file);
-
-      onFinished({ ...data, beforeImage });
-      toggleProcessing(false);
+      console.error(error);
     }
   };
 
@@ -82,8 +88,8 @@ export const ImageDragger = (props: IProps) => {
       >
         <div className="flex w-full items-center justify-center">
           <div className="mr-3 mt-1"><img src={uploadPng} alt='' /></div>
-          <div className="upload-text">
-            Click or drag Intra oral to this area to upload{' '}
+          <div className="upload-text text-base">
+            <div className='font-semibold text-[17px] text-slate-700'>Click or drag <span className='text-violet-700'>Intra oral</span> to this area to upload</div>{' '} or
             <Button type='link' onClick={handleTakePhotoClick} className="font-semibold text-lg text-violet-700 rounded">
               <span className='underline'>Take a photo</span>
             </Button>

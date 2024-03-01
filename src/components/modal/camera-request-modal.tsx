@@ -1,10 +1,10 @@
 import { Button, Modal } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
-import allowCameraIphoneSafariPng from '../assets/allowCameraIphoneSafari.png';
-import allowCameraIphoneChromePng from '../assets/allowCameraIphoneChrome.png';
-import allowCameraAndroid1Jpg from '../assets/allowCameraAndroid1.jpg';
-import allowCameraAndroid2Jpg from '../assets/allowCameraAndroid2.jpg';
+import allowCameraIphoneSafariPng from '../../assets/allowCameraIphoneSafari.png';
+import allowCameraIphoneChromePng from '../../assets/allowCameraIphoneChrome.png';
+import allowCameraAndroid1Jpg from '../../assets/allowCameraAndroid1.jpg';
+import allowCameraAndroid2Jpg from '../../assets/allowCameraAndroid2.jpg';
 import { isSafari, isChrome, isIOS, isAndroid } from 'react-device-detect';
 
 export const CameraRequestModal = NiceModal.create<any>(() => {

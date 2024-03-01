@@ -47,14 +47,14 @@ export const ResultComponent: FC<TProps> = ({ result }) => {
     <div>
       <div className='font-semibold mt-4 mb-2'>Simulation:</div>
       <SmilePreviewComponent url={toothAnimationUrl} />
-      <div className='flex mt-7 space-x-4'>
+      <div className='flex mt-7 space-x-12'>
         <div>
-          <div className='mb-3'>Your uploaded photo</div>
-          <img src={beforeImage} alt="" className='h-[200px]' />
+          <div className='mb-3 font-semibold'>Your uploaded photo</div>
+          <img src={beforeImage} alt="" className='h-[300px]' />
         </div>
         <div>
-          <div className='mb-3'>Matched photo</div>
-          <img src={treatmentDesign?.images[0]} className='h-[200px] ' alt="" />
+          <div className='mb-3 font-semibold'>Matched photo</div>
+          <img src={treatmentDesign?.images[0]} className='h-[300px] ' alt="" />
         </div>
       </div>
       <NiceCollapse title="Treatment Design" open className='mt-7'>
@@ -66,7 +66,7 @@ export const ResultComponent: FC<TProps> = ({ result }) => {
             <div className="col-span-12 md:col-span-6 lg:col-span-4">
               <ViewItem title="Total steps">{treatmentDesign?.totalSteps}</ViewItem>
             </div>
-            <div className="col-span-12">
+            <div className="col-span-12 md:col-span-6 lg:col-span-4">
               <ViewItem
                 title={
                   <div className="flex items-center gap-1">
@@ -79,7 +79,7 @@ export const ResultComponent: FC<TProps> = ({ result }) => {
                 {treatmentDesign?.upperStageNumber}{' '}
               </ViewItem>
             </div>
-            <div className="col-span-12">
+            <div className="col-span-12 md:col-span-6 lg:col-span-4">
               <ViewItem
                 title={
                   <div className="flex items-center gap-1">
@@ -116,16 +116,16 @@ export const ResultComponent: FC<TProps> = ({ result }) => {
                 </div>
               </ViewItem>
             </div>
-            <div className="col-span-6 mt-2">
+            <div className="col-span-12 md:col-span-6 lg:col-span-4 mt-2">
               <ViewItem title="Auxiliaries">{treatmentDesign?.havingElastic}</ViewItem>
             </div>
-            <div className="col-span-12">
+            <div className="col-span-12 md:col-span-6 lg:col-span-4">
               <ViewItem title="Auxiliaries type">{treatmentDesign?.elastics?.join(', ')}</ViewItem>
             </div>
-            <div className="col-span-12 mt-2">
+            <div className="col-span-12 md:col-span-6 lg:col-span-4 mt-2">
               <ViewItem title="Auxiliaries details">{treatmentDesign?.auxiliaryDetail}</ViewItem>
             </div>
-            <div className="col-span-12 mt-2">
+            <div className="col-span-12 md:col-span-6 lg:col-span-4 mt-2">
               <ViewItem title="Comments">{treatmentDesign?.comment}</ViewItem>
             </div>
           </div>
